@@ -31,9 +31,9 @@ const wethContract = new ethers.Contract(WETH_ADDRESS, [
 ], wallet);
 
 // Konfigurasi jumlah min dan max untuk swap serta gas price (Gwei)
-const MIN_AMOUNT = parseFloat(process.env.MIN_AMOUNT || "0.00005");
-const MAX_AMOUNT = parseFloat(process.env.MAX_AMOUNT || "0.00021");
-const GAS_PRICE_GWEI = parseFloat(process.env.GAS_PRICE_GWEI || "0.14");
+const MIN_AMOUNT = parseFloat(process.env.MIN_AMOUNT || "0.0003");
+const MAX_AMOUNT = parseFloat(process.env.MAX_AMOUNT || "0.001");
+const GAS_PRICE_GWEI = parseFloat(process.env.GAS_PRICE_GWEI || "0.18");
 
 if (MIN_AMOUNT <= 0 || MAX_AMOUNT <= 0 || MIN_AMOUNT > MAX_AMOUNT) {
   throw new Error('Nilai MIN_AMOUNT atau MAX_AMOUNT tidak valid.');
