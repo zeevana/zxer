@@ -113,7 +113,7 @@ async function autoSwap(repeatCount, minDelay, maxDelay) {
   console.log();
   console.log('==================================================')
   console.log(`\nJumlah transaksi berhasil : ${successCount}`);
-  console.log(`Jumlah transaksi gagal      : ${failureCount}`);
+  console.log(`Jumlah transaksi gagal    : ${failureCount}`);
   console.log('==================================================')
   console.log();
 }
@@ -131,7 +131,7 @@ if (password !== process.env.AUTH_PASSWORD) {
 displayWelcomeMessage();
 
 const count = readlineSync.questionInt('Masukkan jumlah transaksi (contoh: 40): ', {
-  limit: input => input > 0, // Validasi input harus positif
+  limit: input => input > 0, 
   limitMessage: 'Jumlah transaksi tidak valid!'
 });
 
