@@ -14,7 +14,7 @@ function displayWelcomeMessage() {
   console.log("Join  :  https://t.me/ai_drop100");
   console.log("Github:  https://github.com/zeevana");
   console.log("==================================================");
-  console.log(); 
+  console.log(); }
 
 function logActivity(message) {
   const timestamp = new Date().toISOString();
