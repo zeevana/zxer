@@ -21,7 +21,13 @@ Jangan lupa import private key pada **.env** dan setting sesuai kebutuhan. Setii
    ```bash
    npm install ethers dotenv
 
-4. **Pengaturan .env**
+4. **Install readline-sync**
+   Jalankan perintah berikut untuk menginstal dependensi yang diperlukan:
+   ```bash
+   npm install readline-sync 
+
+   
+6. **Pengaturan .env**
    Buat file .env di direktori proyek dan tambahkan variabel berikut:
    ```plaintext
    PRIVATE_KEY=your_private_key_here
@@ -31,7 +37,7 @@ Jangan lupa import private key pada **.env** dan setting sesuai kebutuhan. Setii
    MAX_AMOUNT=0.001
    GAS_PRICE_GWEI=0.18
 
-5. **Eksekusi**
+7. **Eksekusi**
    Jalankan skrip dengan perintah berikut:
    ```bash
    node taiko.js
