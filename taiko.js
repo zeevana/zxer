@@ -3,13 +3,13 @@
 // ===============================
 
 
-// Import library dan konfigurasi
+
 const { ethers } = require('ethers');
 const readlineSync = require('readline-sync');
 require('dotenv').config();
 const fs = require('fs');
 
-// Menampilkan tampilan awal
+
 function displayWelcomeMessage() {
   console.log("==================================================");
   console.log("                  A I   D R O P                   ");
@@ -118,7 +118,7 @@ async function autoSwap(repeatCount, minDelay, maxDelay) {
     }
 
     const delay = getRandomDelay(minDelay, maxDelay);
-    console.log(`Menunggu selama ${delay / 1000} detik sebelum transaksi berikutnya`); // Perbaikan di sini
+    console.log(`Menunggu selama ${delay / 1000} detik sebelum transaksi berikutnya`); 
     await new Promise(resolve => setTimeout(resolve, delay));
   }
   console.log();
