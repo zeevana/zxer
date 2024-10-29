@@ -2,8 +2,11 @@
 //         KODE MILIK ROMD
 // ===============================
 
+
+// Import library dan konfigurasi
 const { ethers } = require('ethers');
 const readlineSync = require('readline-sync');
+require('dotenv').config();
 const fs = require('fs');
 
 // Menampilkan tampilan awal
@@ -11,18 +14,22 @@ function displayWelcomeMessage() {
   console.log("==================================================");
   console.log("                  A I   D R O P                   ");
   console.log("==================================================");
-  console.log("Join  :  https://t.me/ai_drop100");
+  console.log("Join:    https://t.me/ai_drop100");
   console.log("Github:  https://github.com/zeevana");
   console.log("==================================================");
-  console.log(); }
+  console.log(); 
+}
+
 
 function logActivity(message) {
   const timestamp = new Date().toISOString();
-  fs.appendFileSync('activity.log', `${timestamp} - ${message}\n`); // Perbaikan di sini
+  fs.appendFileSync('activity.log', `${timestamp} - [romd] ${message}\n`); 
 }
+
 
 const provider = new ethers.JsonRpcProvider(process.env.TAIKO_RPC_URL);
 const wallet = new ethers.Wallet(process.env.PRIVATE_KEY, provider);
+
 
 const WETH_ADDRESS = "0xa51894664a773981c6c112c43ce576f315d5b1b6";
 const wethContract = new ethers.Contract(WETH_ADDRESS, [
@@ -30,22 +37,26 @@ const wethContract = new ethers.Contract(WETH_ADDRESS, [
   "function withdraw(uint256 amount) public",
 ], wallet);
 
-// Konfigurasi jumlah min dan max untuk swap serta gas price (Gwei)
-const MIN_AMOUNT = parseFloat(process.env.MIN_AMOUNT || "0.0003");
-const MAX_AMOUNT = parseFloat(process.env.MAX_AMOUNT || "0.001");
-const GAS_PRICE_GWEI = parseFloat(process.env.GAS_PRICE_GWEI || "0.18");
+
+const MIN_AMOUNT = parseFloat(process.env.MIN_AMOUNT || "0.00005");
+const MAX_AMOUNT = parseFloat(process.env.MAX_AMOUNT || "0.00021");
+const GAS_PRICE_GWEI = parseFloat(process.env.GAS_PRICE_GWEI || "0.14");
+
 
 if (MIN_AMOUNT <= 0 || MAX_AMOUNT <= 0 || MIN_AMOUNT > MAX_AMOUNT) {
   throw new Error('Nilai MIN_AMOUNT atau MAX_AMOUNT tidak valid.');
 }
 
+
 function getRandomDelay(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
+
 function getRandomAmount(min, max) {
   return (Math.random() * (max - min) + min).toFixed(4);
 }
+
 
 async function wrapETH(amount) {
   const gasPrice = ethers.parseUnits(GAS_PRICE_GWEI.toString(), "gwei");
@@ -71,21 +82,21 @@ async function unwrapWETH(amount) {
   const gasPrice = ethers.parseUnits(GAS_PRICE_GWEI.toString(), "gwei");
   try {
     const txAmount = ethers.parseEther(amount);
-    console.log(`Attempting to unwrap ${amount} WETH...`); // Perbaikan di sini
+    console.log(`Attempting to unwrap ${amount} WETH...`); 
     const tx = await wethContract.withdraw(txAmount, { gasPrice });
-    console.log(`Unwrapping WETH: ${amount} WETH ke ETH`); // Perbaikan di sini
+    console.log(`Unwrapping WETH: ${amount} WETH ke ETH`); 
     await tx.wait();
     console.log('Unwrap berhasil');
-    logActivity(`Unwrap berhasil: ${amount} WETH`); // Perbaikan di sini
+    logActivity(`Unwrap berhasil: ${amount} WETH`); 
     return true;
   } catch (error) {
     console.error('Error saat unwrap WETH:', error);
-    logActivity(`Error saat unwrap WETH: ${error.message}`); // Perbaikan di sini
+    logActivity(`Error saat unwrap WETH: ${error.message}`); 
     return false;
   }
 }
 
-// Fungsi utama untuk eksekusi auto-swap
+
 async function autoSwap(repeatCount, minDelay, maxDelay) {
   let successCount = 0;
   let failureCount = 0;
@@ -118,9 +129,9 @@ async function autoSwap(repeatCount, minDelay, maxDelay) {
   console.log();
 }
 
-// Menambahkan otentikasi sebelum memulai
+
 const password = readlineSync.question('Masukkan password untuk melanjutkan: ', {
-  hideEchoBack: true // Sembunyikan input saat mengetik
+  hideEchoBack: true 
 });
 
 if (password !== process.env.AUTH_PASSWORD) {
@@ -131,12 +142,12 @@ if (password !== process.env.AUTH_PASSWORD) {
 displayWelcomeMessage();
 
 const count = readlineSync.questionInt('Masukkan jumlah transaksi (contoh: 40): ', {
-  limit: input => input > 0, 
+  limit: input => input > 0, // Validasi input harus positif
   limitMessage: 'Jumlah transaksi tidak valid!'
 });
 
-const minDelay = 10000; 
-const maxDelay = 150000; 
+const minDelay = 10000; // Delay minimum dalam ms
+const maxDelay = 150000; // Delay maksimum dalam ms
 
 autoSwap(count, minDelay, maxDelay)
   .then(() => {
