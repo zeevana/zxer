@@ -39,7 +39,7 @@ const wethContract = new ethers.Contract(WETH_ADDRESS, [
 
 
 const MIN_AMOUNT = parseFloat(process.env.MIN_AMOUNT || "0.0005");
-const MAX_AMOUNT = parseFloat(process.env.MAX_AMOUNT || "0.021");
+const MAX_AMOUNT = parseFloat(process.env.MAX_AMOUNT || "0.0021");
 const GAS_PRICE_GWEI = parseFloat(process.env.GAS_PRICE_GWEI || "0.18");
 
 
